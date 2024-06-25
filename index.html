@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h2 {
+            color: #333;
+        }
+        button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h2>Enter a series of positive numbers (Press Enter to submit, input -1 to stop):</h2>
+    <form id="myForm1">
+        <label for="num1">Without array:</label><br>
+        <input type="number" id="num1" name="num1">
+        <button type="submit">Submit</button>
+    </form>
+    <p id="result1"></p>
+    <form id="myForm2">
+        <label for="num2">With array:</label><br>
+        <input type="number" id="num2" name="num2">
+        <button type="submit">Submit</button>
+    </form>
+    <p id="result2"></p>
+
+    <script>
+        document.getElementById("myForm1").addEventListener("submit", function(event){
+            event.preventDefault()
+            getNumber1();
+        });
+
+        let min1 = Infinity;
+        let max1 = -Infinity;
+        let count1 = 0;
+
+        function getNumber1() {
+            let num = document.getElementById("num1").value;
+            if (num == -1) {
+                document.getElementById("result1").innerHTML = `Smallest number: ${min1}, Largest number: ${max1}, Count: ${count1}`;
+            } else {
+                if (num < min1) min1 = num;
+                if (num > max1) max1 = num;
+                count1++;
+                document.getElementById("result1").innerHTML = `Numbers entered: ${count1}, Current number: ${num}`;
+            }
+            document.getElementById("num1").value = "";
+        }
+
+        document.getElementById("myForm2").addEventListener("submit", function(event){
+            event.preventDefault()
+            getNumber2();
+        });
+
+        let numbers2 = [];
+
+        function getNumber2() {
+            let num = document.getElementById("num2").value;
+            if (num == -1) {
+                let min2 = Math.min(...numbers2);
+                let max2 = Math.max(...numbers2);
+                let count2 = numbers2.length;
+                document.getElementById("result2").innerHTML = `Smallest number: ${min2}, Largest number: ${max2}, Count: ${count2}`;
+            } else {
+                numbers2.push(num);
+                document.getElementById("result2").innerHTML = `Numbers entered: ${numbers2.join(", ")}`;
+            }
+            document.getElementById("num2").value = "";
+        }
+    </script>
+</body>
+</html>
